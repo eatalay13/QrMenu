@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Core.Entities;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Models
 {
-    public partial class ProductToCategory
+    public partial class ProductToCategory : IEntity
     {
+        public int Id { get; set; }
         public int ProductId { get; set; }
         public int CategoryId { get; set; }
 

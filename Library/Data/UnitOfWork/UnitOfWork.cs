@@ -14,12 +14,15 @@ namespace Data.UnitOfWork
         #region Lazy
         private readonly Lazy<IRepository<Category>> _category;
         private readonly Lazy<IRepository<Product>> _product;
+        private readonly Lazy<IRepository<ProductToCategory>> _productToCategory;
         #endregion
 
         #region RepoInitiate
         public IRepository<Category> Category => _category.Value;
 
         public IRepository<Product> Product => _product.Value;
+
+        public IRepository<ProductToCategory> ProductToCategory => _productToCategory.Value;
 
 
         #endregion
@@ -36,6 +39,7 @@ namespace Data.UnitOfWork
 
             _category = CreateRepo<Category>();
             _product = CreateRepo<Product>();
+            _productToCategory = CreateRepo<ProductToCategory>();
         }
 
         #endregion

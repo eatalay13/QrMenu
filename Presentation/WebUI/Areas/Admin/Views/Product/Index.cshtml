@@ -28,6 +28,7 @@
     .ColumnResizingMode(ColumnResizingMode.Widget)
     .ColumnAutoWidth(true)
     .ShowBorders(true)
+    .OnContentReady("dataGridLoad")
     .FilterRow(filterRow => filterRow
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
@@ -39,43 +40,60 @@
     .Export(e => e.Enabled(true)
         .AllowExportSelectedData(true)
     )
+    .Scrolling(scrolling => scrolling.ColumnRenderingMode(GridColumnRenderingMode.Standard))
+    .Paging(paging => paging.PageSize(30))
+    .Pager(pager => {
+        pager.ShowPageSizeSelector(true);
+        pager.AllowedPageSizes(new[] { 10, 30, 50,100 });
+        pager.ShowInfo(true);
+    })
     .HeaderFilter(headerFilter => headerFilter.Visible(true))
     .Sorting(sorting => sorting.Mode(GridSortingMode.Multiple))
     .RemoteOperations(ro => ro.GroupPaging(true))
     .RowAlternationEnabled(true)
+    .OnRowDblClick("RowDbClick")
     .Columns(columns => {
 
-        columns.AddFor(m => m.Id);
+        columns.AddFor(m => m.Image)
+            .Caption("Resim")
+            .Width(100)
+            .AllowFiltering(false)
+            .AllowSorting(false)
+            .CellTemplate(@<text>
+                <div class="aniimated-thumbnials">
+                    <a href="<%- value %>" data-sub-html="ProductImages">
+                         <img class="img-responsive thumbnail" src="<%- value %>" width="50">
+                    </a>
+                </div>
+            </text>);
 
-        columns.AddFor(m => m.StockCode);
+        columns.AddFor(m => m.Name).Caption("Ürün adı");
 
-        columns.AddFor(m => m.Name);
+        columns.AddFor(m => m.Price).Caption("Fiyat");
 
-        columns.AddFor(m => m.Barcode);
+        columns.AddFor(m => m.Description).Caption("Açıklama");
 
-        columns.AddFor(m => m.Model);
+        columns.Add()
+            .Type(GridCommandColumnType.Buttons)
+            .Width(110)
+            .Buttons(b =>
+            {
+                b.Add().Name(GridColumnButtonName.Edit);
+                b.Add().Name(GridColumnButtonName.Delete);
 
-        columns.AddFor(m => m.Quantity);
-
-        columns.AddFor(m => m.Image);
-
-        columns.AddFor(m => m.TaxClassId).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("Products").LoadAction("TaxClassLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
-
-        columns.AddFor(m => m.Description);
-
-        columns.AddFor(m => m.Price);
+                b.Add()
+                    .Hint("Detaylı Düzenle")
+                    .Icon("movetofolder")
+                    .OnClick("DetayIconClick");
+            });
     })
     .Editing(e => e
         .Mode(GridEditMode.Popup)
-        .AllowAdding(true)
+        //.AllowAdding(true)
         .AllowUpdating(true)
         .AllowDeleting(true)
         .Popup(p => p
-                    .Title("Ürün Detay")
+                    .Title("Ürün Hızlı Düzenleme")
                     .ShowTitle(true)
                     .Width(700)
                     .Height(700)
@@ -87,3 +105,33 @@
               )
     )
 )
+
+<script>
+    function dataGridLoad() {
+        $('.aniimated-thumbnials').lightGallery({
+            thumbnail: true,
+            selector: 'a'
+        });
+    }
+
+    function RowDbClick(e) {
+        e.event.preventDefault();
+
+        window.location.href = `/Admin/Product/Update/${e.data.Id}`;
+    }
+
+    function DetayIconClick(e) {
+        e.event.preventDefault();
+
+        window.location.href = `/Admin/Product/Update/${e.row.data.Id}`;
+    }
+
+</script>
+
+@section Styles{
+    <link href="~/Themes/Default/plugins/light-gallery/css/lightgallery.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/Themes/Default/plugins/light-gallery/js/lightgallery-all.js"></script>
+}

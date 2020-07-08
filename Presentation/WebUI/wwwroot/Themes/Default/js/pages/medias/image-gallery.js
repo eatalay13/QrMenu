@@ -1,5 +1,5 @@
 $(function () {
-    $('#aniimated-thumbnials').lightGallery({
+    $('.aniimated-thumbnials').lightGallery({
         thumbnail: true,
         selector: 'a'
     });

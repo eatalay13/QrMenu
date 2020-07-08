@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    [Migration("20200705084654_first")]
-    partial class first
+    [Migration("20200708151912_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -224,60 +224,6 @@ namespace Data.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("Entities.Models.Option", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<short>("SortOrder")
-                        .HasColumnType("smallint");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Option");
-                });
-
-            modelBuilder.Entity("Entities.Models.OptionValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<int>("OptionId")
-                        .HasColumnType("int");
-
-                    b.Property<short>("SortOrder")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OptionId");
-
-                    b.ToTable("OptionValue");
-                });
-
             modelBuilder.Entity("Entities.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -294,10 +240,6 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Model")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -306,30 +248,7 @@ namespace Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SeoUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("StockCode")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50)
-                        .IsUnicode(false);
-
-                    b.Property<string>("Tag")
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
-
-                    b.Property<int?>("TaxClassId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TaxClassId");
 
                     b.ToTable("Product");
                 });
@@ -359,99 +278,26 @@ namespace Data.Migrations
                     b.ToTable("ProductImage");
                 });
 
-            modelBuilder.Entity("Entities.Models.ProductOption", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OptionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Required")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OptionId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductOption");
-                });
-
-            modelBuilder.Entity("Entities.Models.ProductOptionValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OptionValueId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("money");
-
-                    b.Property<int>("ProductOptionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OptionValueId");
-
-                    b.HasIndex("ProductOptionId");
-
-                    b.ToTable("ProductOptionValue");
-                });
-
             modelBuilder.Entity("Entities.Models.ProductToCategory", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.HasKey("Id");
+
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductToCategory");
-                });
-
-            modelBuilder.Entity("Entities.Models.TaxClass", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<decimal?>("Rate")
-                        .HasColumnType("money");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TaxClass");
                 });
 
             modelBuilder.Entity("Entities.Models.Category", b =>
@@ -462,59 +308,12 @@ namespace Data.Migrations
                         .HasConstraintName("FK_Category_Category");
                 });
 
-            modelBuilder.Entity("Entities.Models.OptionValue", b =>
-                {
-                    b.HasOne("Entities.Models.Option", "Option")
-                        .WithMany("OptionValue")
-                        .HasForeignKey("OptionId")
-                        .HasConstraintName("FK_OptionValue_Option")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entities.Models.Product", b =>
-                {
-                    b.HasOne("Entities.Models.TaxClass", "TaxClass")
-                        .WithMany("Product")
-                        .HasForeignKey("TaxClassId")
-                        .HasConstraintName("FK_Product_TaxClass");
-                });
-
             modelBuilder.Entity("Entities.Models.ProductImage", b =>
                 {
                     b.HasOne("Entities.Models.Product", "Product")
                         .WithMany("ProductImage")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("FK_ProductImage_Product")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entities.Models.ProductOption", b =>
-                {
-                    b.HasOne("Entities.Models.Option", "Option")
-                        .WithMany("ProductOption")
-                        .HasForeignKey("OptionId")
-                        .HasConstraintName("FK_ProductOption_Option")
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.Product", "Product")
-                        .WithMany("ProductOption")
-                        .HasForeignKey("ProductId")
-                        .HasConstraintName("FK_ProductOption_Product")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entities.Models.ProductOptionValue", b =>
-                {
-                    b.HasOne("Entities.Models.OptionValue", "OptionValue")
-                        .WithMany("ProductOptionValue")
-                        .HasForeignKey("OptionValueId")
-                        .HasConstraintName("FK_ProductOptionValue_OptionValue")
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.ProductOption", "ProductOption")
-                        .WithMany("ProductOptionValue")
-                        .HasForeignKey("ProductOptionId")
-                        .HasConstraintName("FK_ProductOptionValue_ProductOption")
                         .IsRequired();
                 });
 

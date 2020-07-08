@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Entities.Dtos.Product
 {
-    public class AddProductDto
+    public class UpdateProductDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -37,5 +37,20 @@ namespace WebUI.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Update(int id)
+        {
+            var product = _productBusiness.GetProductDetail(id);
+
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Update(UpdateProductDto updateProduct)
+        {
+            _productBusiness.UpdateProduct(updateProduct);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

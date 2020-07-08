@@ -10,6 +10,7 @@ namespace Data.UnitOfWork
     {
         IRepository<Category> Category { get; }
         IRepository<Product> Product { get; }
+        IRepository<ProductToCategory> ProductToCategory { get; }
 
         void SaveChanges();
     }

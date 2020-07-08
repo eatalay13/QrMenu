@@ -1,22 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "Ürün Ekle";
+    ViewData["Title"] = "Ürün Düzenle";
 }
 
-@model Entities.Dtos.Product.AddProductDto
+@model Entities.Dtos.Product.UpdateProductDto
 
 
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <form asp-action="Add" method="post" enctype="multipart/form-data">
+        <form asp-action="Update" method="post" enctype="multipart/form-data">
             <div class="card">
                 <div class="header">
                     <h2>
-                        Yeni Ürün Ekle
+                        Ürün Düzenle
                     </h2>
                     <ul class="header-dropdown m-r--5">
                         <li class="dropdown">
                             <button type="submit" class="btn btn-success waves-effect">
-                                Kaydet
+                                Güncelle
                             </button>
                         </li>
                     </ul>
@@ -39,6 +39,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="home_with_icon_title">
+                            <input asp-for="Id" hidden />
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <input asp-for="Name" class="form-control" required>
@@ -76,8 +77,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <b>Ana Resim : </b>
-                                    <img src="~/Upload/noImg.jpg" class="select-img" target-input="MainPhoto" width="100" onclick="selectImage(this)" />
-                                    <input hidden name="MainPhoto" required />
+                                    <img src="@Model.MainPhoto" class="select-img" target-input="MainPhoto" width="100" onclick="selectImage(this)" />
+                                    <input hidden asp-for="MainPhoto" required />
                                 </div>
                                 <hr />
                                 <h4>Diğer Görseller</h4>
@@ -92,25 +93,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="imageList">
-                                                <tr>
-                                                    <td>
-                                                        <img src="~/Upload/noImg.jpg" class="select-img" target-input="Photos[0].Image" width="100" onclick="selectImage(this)" />
-                                                        <input hidden asp-for="Photos[0].Image" />
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <div class="form-group form-float" style="margin-top:15px; margin-bottom: 0;">
-                                                            <div class="form-line">
-                                                                <input asp-for="Photos[0].SortOrder" class="form-control" required>
-                                                                <label asp-for="Photos[0].SortOrder" class="form-label"></label>
+                                                @for (int i = 0; i < Model.Photos.Count; i++)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <img src="@Model.Photos[i].Image" class="select-img" target-input="Photos[@i].Image" width="100" onclick="selectImage(this)" />
+                                                            <input hidden asp-for="Photos[i].Image" />
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <div class="form-group form-float" style="margin-top:15px; margin-bottom: 0;">
+                                                                <div class="form-line">
+                                                                    <input asp-for="Photos[i].SortOrder" class="form-control" required>
+                                                                    <label asp-for="Photos[i].SortOrder" class="form-label"></label>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <button type="button" class="btn btn-danger waves-effect delete-img-btn">
-                                                            <i class="material-icons">delete</i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <button type="button" class="btn btn-danger waves-effect delete-img-btn">
+                                                                <i class="material-icons">delete</i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                }
                                             </tbody>
                                             <tfoot>
                                                 <tr>
