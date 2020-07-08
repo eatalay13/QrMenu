@@ -6,5 +6,6 @@ namespace Entities.Models.Auth
     {
         public string Name { get; set; }
         public string LastName { get; set; }
+        //public string ProfilePhoto { get; set; }
     }
 }
