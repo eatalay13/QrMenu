@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Ürünler";
+}
+
+<div class="block-header">
+    <div class="text-right">
+        <a asp-action="Add" class="btn btn-success waves-effect">
+            <i class="material-icons">add</i>
+            <span>Yeni Ürün Ekle</span>
+        </a>
+    </div>
+</div>
+
+@(Html.DevExtreme().DataGrid<Entities.Models.Product>()
+    .DataSource(ds => ds.Mvc()
+        .Controller("Products")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .Selection(s => s.Mode(SelectionMode.Multiple))
+    .AllowColumnReordering(true)
+    .AllowColumnResizing(true)
+    .Grouping(g => g.AutoExpandAll(false))
+    .GroupPanel(gp => gp.Visible(true))
+    .ColumnResizingMode(ColumnResizingMode.Widget)
+    .ColumnAutoWidth(true)
+    .ShowBorders(true)
+    .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+        .Visible(true)
+        .Width(240)
+    )
+    .Export(e => e.Enabled(true)
+        .AllowExportSelectedData(true)
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .Sorting(sorting => sorting.Mode(GridSortingMode.Multiple))
+    .RemoteOperations(ro => ro.GroupPaging(true))
+    .RowAlternationEnabled(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.StockCode);
+
+        columns.AddFor(m => m.Name);
+
+        columns.AddFor(m => m.Barcode);
+
+        columns.AddFor(m => m.Model);
+
+        columns.AddFor(m => m.Quantity);
+
+        columns.AddFor(m => m.Image);
+
+        columns.AddFor(m => m.TaxClassId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Products").LoadAction("TaxClassLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+
+        columns.AddFor(m => m.Description);
+
+        columns.AddFor(m => m.Price);
+    })
+    .Editing(e => e
+        .Mode(GridEditMode.Popup)
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .Popup(p => p
+                    .Title("Ürün Detay")
+                    .ShowTitle(true)
+                    .Width(700)
+                    .Height(700)
+                    .Position(pos => pos
+                        .My(HorizontalAlignment.Center, VerticalAlignment.Center)
+                        .At(HorizontalAlignment.Center, VerticalAlignment.Center)
+                        .Of(new JS("window"))
+                    )
+              )
+    )
+)

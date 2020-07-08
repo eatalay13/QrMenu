@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="~/Themes/Default/img/favicon.png" type="image/png">
+    <title>@ViewData["Title"] - Emrah Atalay</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="~/Themes/Default/plugins/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Themes/Default/plugins/node-waves/waves.css">
+    <link rel="stylesheet" href="~/Themes/Default/plugins/animate-css/animate.css">
+    <link rel="stylesheet" href="~/Themes/Default/plugins/morrisjs/morris.css">
+    <!-- main css -->
+    <link rel="stylesheet" href="~/Themes/Default/css/style.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/Themes/Default/css/themes/all-themes.css">
+    <link rel="stylesheet" href="~/css/devextreme/dx.common.css" />
+    <link rel="stylesheet" href="~/css/devextreme/dx.material.blue.light.compact.css" />
+    @RenderSection("Styles", required: false)
+
+    <script src="~/Themes/Default/plugins/jquery/jquery.min.js"></script>
+    <script src="~/Themes/Default/plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Themes/Default/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/Themes/Default/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="~/Themes/Default/plugins/node-waves/waves.js"></script>
+    <script src="~/Themes/Default/plugins/jquery-countto/jquery.countTo.js"></script>
+    <script src="~/Themes/Default/plugins/raphael/raphael.min.js"></script>
+
+    <script src="~/js/devextreme/jszip.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+</head>
+<body class="theme-indigo">
+    <partial name="_loader" />
+    <div class="overlay"></div>
+    <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
+        </div>
+        <input type="text" placeholder="Ara...">
+        <div class="close-search">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    @await Component.InvokeAsync("AdminHeader")
+
+    <section class="content">
+        @RenderBody()
+    </section>
+
+    <script src="~/Themes/Default/js/admin.js"></script>
+    <script src="~/Themes/Default/js/pages/index.js"></script>
+    <script src="~/Themes/Default/js/demo.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

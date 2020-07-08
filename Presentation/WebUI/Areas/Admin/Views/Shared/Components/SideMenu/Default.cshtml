@@ -1,0 +1,53 @@
+﻿<aside id="leftsidebar" class="sidebar">
+    <!-- User Info -->
+    <div class="user-info">
+        <div class="image">
+            <img src="/Themes/Default/images/user.jpg" width="48" height="48" alt="User" />
+        </div>
+        <div class="info-container">
+            <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Emrah Atalay</div>
+            <div class="email">emrahatalay92@gmail.com</div>
+            <div class="btn-group user-helper-dropdown">
+                <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                <ul class="dropdown-menu pull-right">
+                    <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profil</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
+                    <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
+                    <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a asp-area="Identity" asp-controller="Account" asp-action="Logout"><i class="material-icons">input</i>Çıkış Yap</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- #User Info -->
+    <!-- Menu -->
+    <div class="menu">
+        <ul class="list">
+            <li class="header">MENU</li>
+            <li class="active">
+                <a asp-action="Index" asp-controller="Home">
+                    <i class="material-icons">home</i>
+                    <span>Anasayfa</span>
+                </a>
+            </li>
+            <li>
+                <a asp-action="Index" asp-controller="Product">
+                    <i class="material-icons">reorder</i>
+                    <span>Ürünler</span>
+                </a>
+            </li>
+            <li>
+                <a asp-action="Index" asp-controller="Category">
+                    <i class="material-icons">format_align_left</i>
+                    <span>Kategoriler</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- #Menu -->
+    <!-- Footer -->
+    @await Component.InvokeAsync("AdminFooter")
+    <!-- #Footer -->
+</aside>
