@@ -73,6 +73,7 @@ namespace WebUI.Controllers
             string PARENT_CATEGORY_ID = nameof(Category.ParentCategoryId);
             string SORT_ORDER = nameof(Category.SortOrder);
             string DESCRIPTION = nameof(Category.Description);
+            string IMAGE = nameof(Category.Image);
 
             if (values.Contains(ID))
             {
@@ -97,6 +98,11 @@ namespace WebUI.Controllers
             if (values.Contains(DESCRIPTION))
             {
                 model.Description = Convert.ToString(values[DESCRIPTION]);
+            }
+
+            if (values.Contains(IMAGE))
+            {
+                model.Image = Convert.ToString(values[IMAGE]);
             }
         }
     }

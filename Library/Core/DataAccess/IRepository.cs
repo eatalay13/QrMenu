@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Core.DataAccess
 {
-    public interface IRepository<T> where T : class, IEntity, new()
+    public interface IRepository<T> where T : class, new()
     {
         #region Methods
         T GetById(object id);

@@ -30,6 +30,7 @@
     .ColumnResizingMode(ColumnResizingMode.Widget)
     .ColumnAutoWidth(true)
     .ShowBorders(true)
+    .OnContentReady("dataGridLoad")
     .FilterRow(filterRow => filterRow
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
@@ -46,6 +47,19 @@
     .RemoteOperations(ro => ro.GroupPaging(true))
     .RowAlternationEnabled(true)
     .Columns(columns => {
+
+        columns.AddFor(m => m.Image)
+        .Caption("Resim")
+        .Width(100)
+        .AllowFiltering(false)
+        .AllowSorting(false)
+        .CellTemplate(@<text>
+            <div class="aniimated-thumbnials">
+                <a href="<%- value %>" data-sub-html="CategoryImages">
+                     <img class="img-responsive thumbnail" src="<%- value %>" width="50">
+                </a>
+            </div>
+        </text>);
 
         columns.AddFor(m => m.Name).Caption("Kategori Adı");
 
@@ -65,15 +79,53 @@
         .AllowUpdating(true)
         .AllowDeleting(true)
         .Popup(p => p
-                    .Title("Kategori Detay")
-                    .ShowTitle(true)
-                    .Width(700)
-                    .Height(400)
-                    .Position(pos => pos
-                        .My(HorizontalAlignment.Center, VerticalAlignment.Center)
-                        .At(HorizontalAlignment.Center, VerticalAlignment.Center)
-                        .Of(new JS("window"))
-                    )
+              .Title("Kategori Detay")
+              .ShowTitle(true)
+              .Width(700)
+              .Height(500)
+              .Position(pos => pos
+                  .My(HorizontalAlignment.Center, VerticalAlignment.Center)
+                  .At(HorizontalAlignment.Center, VerticalAlignment.Center)
+                  .Of(new JS("window"))
               )
+        ).Form(f => f.Items(items =>
+        {
+            items.AddGroup().ColCount(2).ColSpan(2)
+                .Items(groupItems =>
+                {
+                    groupItems.AddSimpleFor(m => m.Name);
+                    groupItems.AddSimpleFor(m => m.ParentCategoryId);
+                    groupItems.AddSimpleFor(m => m.SortOrder);
+                    groupItems.AddSimpleFor(m => m.Description);
+
+                    groupItems.AddSimpleFor(m => m.Image)
+                              .Editor(e => e.TextBox().ID("cat-image-input")).ColSpan(2);
+                });
+        }))
     )
 )
+
+<partial name="_fileEditor" />
+
+@section Styles{
+    <link href="~/Themes/Default/plugins/light-gallery/css/lightgallery.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/Themes/Default/plugins/light-gallery/js/lightgallery-all.js"></script>
+}
+
+<script>
+
+    function dataGridLoad() {
+        $('.aniimated-thumbnials').lightGallery({
+            thumbnail: true,
+            selector: 'a'
+        });
+    }
+
+    $(document).on("click", "#cat-image-input", function () {
+        let element = this;
+        selectImage(element);
+    })
+</script>

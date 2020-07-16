@@ -1,5 +1,4 @@
 ﻿using Core.DataAccess;
-using Core.Entities;
 using Data.Repository.Contexts;
 using Entities.Models;
 using System;
@@ -60,7 +59,7 @@ namespace Data.UnitOfWork
             }
         }
 
-        private Lazy<IRepository<TModel>> CreateRepo<TModel>() where TModel : class, IEntity, new()
+        private Lazy<IRepository<TModel>> CreateRepo<TModel>() where TModel : class, new()
         {
             return new Lazy<IRepository<TModel>>(() => new RepositoryBase<TModel>(_dbContext));
         }

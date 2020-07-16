@@ -48,6 +48,12 @@
     </div>
 </div>
 
+<style>
+    .modal {
+        z-index: 9999 !important;
+    }
+</style>
+
 <script>
     let selectedItem = "";
     let targetElement = null;
@@ -65,8 +71,14 @@
     $('#fileEditorModal').on('hidden.bs.modal', function (e) {
         selectedItem = GetFileName();
         if (selectedItem !== undefined) {
-            targetElement.src = selectedItem;
+            if (targetElement.tagName === "IMG") {
+                targetElement.src = selectedItem;
+            }
             $("input[name='" + targetElement.getAttribute("target-input") + "']").val(selectedItem);
+
+            let dxElemet = $("#cat-image-input").dxTextBox("instance");
+            if (dxElemet)
+                dxElemet.option("value", selectedItem);
         }
     })
 

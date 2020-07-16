@@ -16,7 +16,11 @@ namespace Data.Repository.Contexts
         {
         }
 
+        public virtual DbSet<CafeTable> CafeTable { get; set; }
+        public virtual DbSet<Cart> Cart { get; set; }
         public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderProduct> OrderProduct { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductImage> ProductImage { get; set; }
         public virtual DbSet<ProductToCategory> ProductToCategory { get; set; }
@@ -76,9 +80,45 @@ namespace Data.Repository.Contexts
 
             #endregion
 
+            modelBuilder.Entity<CafeTable>(entity =>
+            {
+                entity.HasIndex(e => e.Number)
+                    .HasName("UK_CafeTable_Number")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Cart>(entity =>
+            {
+                entity.Property(e => e.AddedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.CafeTable)
+                    .WithMany(p => p.Cart)
+                    .HasForeignKey(d => d.CafeTableId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_Cart_CafeTable");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Cart)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_Cart_Product");
+            });
+
             modelBuilder.Entity<Category>(entity =>
             {
+                entity.HasIndex(e => e.ParentCategoryId);
+
                 entity.Property(e => e.Description).HasMaxLength(500);
+
+                entity.Property(e => e.Image)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -88,6 +128,48 @@ namespace Data.Repository.Contexts
                     .WithMany(p => p.InverseParentCategory)
                     .HasForeignKey(d => d.ParentCategoryId)
                     .HasConstraintName("FK_Category_Category");
+            });
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.AddedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.LastUpdateDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.OrderCode)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Total).HasColumnType("money");
+
+                entity.HasOne(d => d.CafeTable)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.CafeTableId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Order_CafeTable");
+            });
+
+            modelBuilder.Entity<OrderProduct>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Price).HasColumnType("money");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderProduct)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_OrderProduct_Order");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -107,6 +189,8 @@ namespace Data.Repository.Contexts
 
             modelBuilder.Entity<ProductImage>(entity =>
             {
+                entity.HasIndex(e => e.ProductId);
+
                 entity.Property(e => e.Image)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -120,14 +204,22 @@ namespace Data.Repository.Contexts
 
             modelBuilder.Entity<ProductToCategory>(entity =>
             {
+                entity.HasIndex(e => e.CategoryId);
+
+                entity.HasIndex(e => e.ProductId);
+
+                entity.HasIndex(e => new { e.CategoryId, e.ProductId })
+                    .HasName("UK_ProductToCategoryId")
+                    .IsUnique();
+
                 entity.HasOne(d => d.Category)
-                    .WithMany()
+                    .WithMany(p => p.ProductToCategory)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_ProductToCategory_Category");
 
                 entity.HasOne(d => d.Product)
-                    .WithMany()
+                    .WithMany(p => p.ProductToCategory)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_ProductToCategory_Product");

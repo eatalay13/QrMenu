@@ -7,7 +7,7 @@ using System.Linq;
 namespace Core.DataAccess
 {
     public class RepositoryBase<TEntity> : IRepository<TEntity>
-    where TEntity : class, IEntity, new()
+    where TEntity : class, new()
     {
         private readonly DbContext _context;
 
