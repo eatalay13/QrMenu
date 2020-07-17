@@ -1,60 +1,56 @@
-﻿<div class="modal fade" id="fileEditorModal" tabindex="-1" role="dialog" style="display: none;">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="largeModalLabel">Dosya Yöneticisi</h4>
-            </div>
-            <div class="modal-body">
-                @(Html.DevExtreme().FileManager()
-                    .ID("file_manager")
-                    .CurrentPath("Upload")
-                    .FileSystemProvider(provider => provider
-                        .Remote()
-                        .Url(Url.RouteUrl("FileManagementImagesApi")))
-                    .Permissions(permissions => permissions
-                        .Create(true)
-                        .Copy(true)
-                        .Move(true)
-                        .Delete(true)
-                        .Rename(true)
-                        .Upload(true)
-                        .Download(true))
-                    .OnSelectedFileOpened(@<text>
-                        function(e) {
-                            var popup = $("#photo-popup").dxPopup("instance");
-                            popup.option({
-                                "title": e.file.name,
-                                "contentTemplate": "<img src=\"" + e.file.dataItem.url + "\" class=\"photo-popup-image\" />"
-                            });
-                            popup.show();
-                        }
-                    </text>)
-                    .Height(450))
-                @(Html.DevExtreme().Popup()
-                    .ID("photo-popup")
-                    .MaxHeight(600)
-                    .OnContentReady(@<text>
-                        function(e) {
-                            var $contentElement = e.component.content();
-                            $contentElement.addClass("photo-popup-content");
-                        }
-                    </text>)
+﻿@(Html.DevExtreme().Popup()
+        .ID("file-manager-popup")
+        .ShowTitle(true)
+        .Title("Dosya Yöneticisi")
+        .OnHidden("fileManagerPopupDispose")
+        .CloseOnOutsideClick(true)
+    )
+
+@using (Html.DevExtreme().NamedTemplate("fileManagerTemplate"))
+{
+    <div style="height:100%; width:100%;">
+        @(Html.DevExtreme().FileManager()
+        .ID("file_manager")
+        .CurrentPath("Upload")
+        .Height("100%")
+        .Height("100%")
+        .FileSystemProvider(provider => provider
+            .Remote()
+            .Url(Url.RouteUrl("FileManagementImagesApi")))
+        .Permissions(permissions => permissions
+            .Create(true)
+            .Copy(true)
+            .Move(true)
+            .Delete(true)
+            .Rename(true)
+            .Upload(true)
+            .Download(true))
+        .OnSelectedFileOpened(@<text>
+                    function(e) {
+                    var popup = $("#photo-popup").dxPopup("instance");
+                    popup.option({
+                    "width":e.file.width,
+                    "height":e.file.height,
+                    "title": e.file.name,
+                    "contentTemplate": "<img src=\"" + e.file.dataItem.url + "\" class=\"photo-popup-image\" style=\"object-fit: scale-down;\" />"});
+                    popup.show();
+                    }
+        </text>))
+        @(Html.DevExtreme().Popup()
+                            .ID("photo-popup")
+                            .OnContentReady(@<text>
+                                    function(e) {
+                                    var $contentElement = e.component.content();
+                                    $contentElement.addClass("photo-popup-content");
+                                    }
+                            </text>)
                     .CloseOnOutsideClick(true))
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Tamam</button>
-            </div>
-        </div>
     </div>
-</div>
+}
 
 <style>
-    .modal {
-        z-index: 9998 !important;
-    }
-
-    .dx-popup-wrapper {
-        z-index: 9999 !important;
+    .dx-popup-content {
+        padding: 10px !important;
     }
 </style>
 
@@ -70,9 +66,9 @@
         var fileManager = getFileManager();
         if (fileManager.getSelectedItems().length > 0)
             return "\\Upload\\" + fileManager.getCurrentDirectory().relativeName + "\\" + fileManager.getSelectedItems()[0].name;
-    };
+    }
 
-    $('#fileEditorModal').on('hidden.bs.modal', function (e) {
+    function fileManagerPopupDispose(e) {
         selectedItem = GetFileName();
         if (selectedItem !== undefined) {
             if (targetElement.tagName === "IMG") {
@@ -84,10 +80,12 @@
             if (dxElemet)
                 dxElemet.option("value", selectedItem);
         }
-    })
+    }
 
     function selectImage(imgElement) {
-        $('#fileEditorModal').modal('show');
+        var popup = $("#file-manager-popup").dxPopup("instance");
+        popup.option("contentTemplate", $("#fileManagerTemplate"))
+        popup.show();
         targetElement = imgElement;
     }
 </script>
