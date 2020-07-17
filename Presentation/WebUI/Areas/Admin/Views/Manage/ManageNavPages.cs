@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace WebUI.Areas.Identity.Views.Manage
+namespace WebUI.Areas.Admin.Views.Manage
 {
     public static class ManageNavPages
     {

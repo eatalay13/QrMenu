@@ -7,16 +7,14 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using WebUI.Areas.Identity.Models.AccountViewModels;
-using WebUI.Controllers;
+using WebUI.Areas.Admin.Models.AccountViewModels;
 using WebUI.Framework.Extensions;
 using WebUI.Framework.Services;
 
-namespace WEBUI.Controllers
+namespace WebUI.Areas.Admin.Controllers
 {
     [Authorize]
-    [Area("Identity")]
-    [Route("[controller]/[action]")]
+    [Area("Admin")]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;

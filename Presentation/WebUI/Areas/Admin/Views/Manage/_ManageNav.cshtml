@@ -1,4 +1,4 @@
-﻿@using WebUI.Areas.Identity.Views.Manage
+﻿@using WebUI.Areas.Admin.Views.Manage
 
 @inject SignInManager<User> SignInManager
 @{ var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any(); }

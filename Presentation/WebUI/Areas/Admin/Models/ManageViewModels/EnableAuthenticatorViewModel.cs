@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace WebUI.Areas.Identity.Models.ManageViewModels
+namespace WebUI.Areas.Admin.Models.ManageViewModels
 {
     public class EnableAuthenticatorViewModel
     {

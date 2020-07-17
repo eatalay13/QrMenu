@@ -7,7 +7,6 @@
     <ProjectReference Include="..\WebUI.Framework\WebUI.Framework.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Identity\Data\" />
     <Folder Include="Themes\Default\Views\Home\" />
     <Folder Include="Themes\Default\Views\Shared\" />
   </ItemGroup>

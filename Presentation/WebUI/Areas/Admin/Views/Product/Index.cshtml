@@ -93,18 +93,32 @@
         .AllowUpdating(true)
         .AllowDeleting(true)
         .Popup(p => p
-                    .Title("Ürün Hızlı Düzenleme")
-                    .ShowTitle(true)
-                    .Width(700)
-                    .Height(700)
-                    .Position(pos => pos
-                        .My(HorizontalAlignment.Center, VerticalAlignment.Center)
-                        .At(HorizontalAlignment.Center, VerticalAlignment.Center)
-                        .Of(new JS("window"))
-                    )
+              .Title("Ürün Hızlı Düzenleme")
+              .ShowTitle(true)
+              .Width(700)
+              .Height(700)
+              .Position(pos => pos
+                  .My(HorizontalAlignment.Center, VerticalAlignment.Center)
+                  .At(HorizontalAlignment.Center, VerticalAlignment.Center)
+                  .Of(new JS("window"))
               )
+        ).Form(f => f.Items(items =>
+        {
+            items.AddGroup().ColCount(2).ColSpan(2)
+                .Items(groupItems =>
+                {
+                    groupItems.AddSimpleFor(m => m.Name);
+                    groupItems.AddSimpleFor(m => m.Price);
+                    groupItems.AddSimpleFor(m => m.Description);
+
+                    groupItems.AddSimpleFor(m => m.Image)
+                              .Editor(e => e.TextBox().ID("cat-image-input")).ColSpan(2);
+                });
+        }))
     )
 )
+
+<partial name="_fileEditor" />
 
 <script>
     function dataGridLoad() {
@@ -125,6 +139,11 @@
 
         window.location.href = `/Admin/Product/Update/${e.row.data.Id}`;
     }
+
+    $(document).on("focus click", "#cat-image-input", function () {
+        let element = this;
+        selectImage(element);
+    })
 
 </script>
 

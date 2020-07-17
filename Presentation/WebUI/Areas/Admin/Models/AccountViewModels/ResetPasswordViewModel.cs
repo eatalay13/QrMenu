@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebUI.Areas.Identity.Models.AccountViewModels
+namespace WebUI.Areas.Admin.Models.AccountViewModels
 {
     public class ResetPasswordViewModel
     {

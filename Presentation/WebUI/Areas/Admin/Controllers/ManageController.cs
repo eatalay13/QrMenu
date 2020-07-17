@@ -9,15 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using WebUI.Areas.Identity.Models.ManageViewModels;
+using WebUI.Areas.Admin.Models.ManageViewModels;
 using WebUI.Framework.Extensions;
 using WebUI.Framework.Services;
 
-namespace WebUI.Areas.Identity.Controllers
+namespace WebUI.Areas.Admin.Controllers
 {
     [Authorize]
-    [Area("Identity")]
-    [Route("[controller]/[action]")]
+    [Area("Admin")]
     public class ManageController : Controller
     {
         private readonly UserManager<User> _userManager;
