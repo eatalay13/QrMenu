@@ -1,4 +1,5 @@
-﻿using DevExtreme.AspNet.Data.ResponseModel;
+﻿using Core.Utilities.TreeItem;
+using DevExtreme.AspNet.Data.ResponseModel;
 using DevExtreme.AspNet.Mvc;
 using Entities.Models;
 using System;
@@ -15,6 +16,7 @@ namespace Business.Interfaces
         Category GetByIdCategory(int id);
         void UpdateCategory(Category category);
         void DeleteCategory(int id);
+        IEnumerable<TreeItem<Category>> GetCategoryTreeList();
         Task<LoadResult> BindDevExp(DataSourceLoadOptions loadOptions);
     }
 }

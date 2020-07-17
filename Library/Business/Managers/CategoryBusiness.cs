@@ -1,5 +1,6 @@
 ﻿using Business.Interfaces;
 using Core.Exceptions;
+using Core.Utilities.TreeItem;
 using Data.UnitOfWork;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
@@ -53,6 +54,12 @@ namespace Business.Managers
         public ICollection<Category> GetCategoryList()
         {
             return _uow.Category.TableNoTracking.ToList();
+        }
+
+        public IEnumerable<TreeItem<Category>> GetCategoryTreeList()
+        {
+            var categories = GetCategoryList().AsEnumerable();
+            return categories.GenerateTree(c => c.Id, c => c.ParentCategoryId);
         }
 
         public void UpdateCategory(Category category)
