@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Kategoriler";
+}
+
+<div class="block-header">
+    <h2>
+        Masalar Tablosu
+        <small>
+            Açıklama
+        </small>
+    </h2>
+</div>
+
+@(Html.DevExtreme().DataGrid<Entities.Models.CafeTable>()
+    .ID("CategoryTreeList")
+    .DataSource(ds => ds.Mvc()
+        .Controller("CafeTables")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .AllowColumnReordering(true)
+    .AllowColumnResizing(true)
+    .ColumnResizingMode(ColumnResizingMode.Widget)
+    .ColumnAutoWidth(true)
+    .Grouping(g => g.AutoExpandAll(false))
+    .GroupPanel(gp => gp.Visible(true))
+    .ShowBorders(true)
+    .Export(e => e.Enabled(true)
+        .AllowExportSelectedData(true)
+    )
+    .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+        .Visible(true)
+        .Width(240)
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .Sorting(sorting => sorting.Mode(GridSortingMode.Multiple))
+    .RemoteOperations(ro => ro.GroupPaging(true))
+    .RowAlternationEnabled(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Name).Caption("Masa Adı");
+
+
+        columns.AddFor(m => m.Number).Caption("Numarası").MinWidth(60);
+
+        columns.AddFor(m => m.IsBusy).Caption("Meşgul mü?").MinWidth(250);
+    })
+    .Editing(e => e
+        .Mode(GridEditMode.Popup)
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .Popup(p => p
+              .Title("Masa Detay")
+              .ShowTitle(true)
+              .Width(700)
+              .Height(500)
+              .Position(pos => pos
+                  .My(HorizontalAlignment.Center, VerticalAlignment.Center)
+                  .At(HorizontalAlignment.Center, VerticalAlignment.Center)
+                  .Of(new JS("window"))
+              )
+        )
+    )
+)

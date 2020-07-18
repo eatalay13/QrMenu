@@ -20,6 +20,8 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<CategoryBusiness>().As<ICategoryBusiness>();
 
+            builder.RegisterType<CafeTableBusiness>().As<ICafeTableBusiness>();
+
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 

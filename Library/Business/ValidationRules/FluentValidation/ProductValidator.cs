@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-//using Entities.Models;
+using Entities.Models;
 using FluentValidation;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class ProductValidator : AbstractValidator<Object>
+    public class ProductValidator : AbstractValidator<Product>
     {
         public ProductValidator()
         {

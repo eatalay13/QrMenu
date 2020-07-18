@@ -86,8 +86,6 @@ namespace Data.Repository.Contexts
                     .HasName("UK_CafeTable_Number")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -132,8 +130,6 @@ namespace Data.Repository.Contexts
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.AddedDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
@@ -157,8 +153,6 @@ namespace Data.Repository.Contexts
 
             modelBuilder.Entity<OrderProduct>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
