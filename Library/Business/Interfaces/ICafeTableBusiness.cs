@@ -10,6 +10,8 @@ namespace Business.Interfaces
     {
         ICollection<CafeTable> GetCafeTableList();
         void AddCafeTable(CafeTable cafeTable);
+        byte[] GetTableQRCode(int tableId);
+        byte[] GetAllQrCodeZip();
         CafeTable GetByIdCafeTable(int id);
         void UpdateCafeTable(CafeTable cafeTable);
         void DeleteCafeTable(int id);

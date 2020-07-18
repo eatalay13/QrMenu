@@ -1,14 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Kategoriler";
+    ViewData["Title"] = "Masalar";
 }
 
 <div class="block-header">
-    <h2>
-        Masalar Tablosu
-        <small>
-            Açıklama
-        </small>
-    </h2>
+    <a asp-action="GetAllQrCode" class="btn btn-primary"><i class="material-icons">cloud_download</i> Tüm QR Kodları indir.</a>
 </div>
 
 @(Html.DevExtreme().DataGrid<Entities.Models.CafeTable>()
@@ -21,6 +16,7 @@
         .DeleteAction("Delete")
         .Key("Id")
     )
+    .OnRowDblClick("showQRCode")
     .AllowColumnReordering(true)
     .AllowColumnResizing(true)
     .ColumnResizingMode(ColumnResizingMode.Widget)
@@ -70,3 +66,22 @@
         )
     )
 )
+@(Html.DevExtreme().Popup()
+        .ID("qr-code-popup")
+        .Width(350)
+        .Height(400)
+        .ShowTitle(true)
+        .Visible(false)
+        .CloseOnOutsideClick(true)
+    )
+
+<script>
+    function showQRCode(e) {
+        var popup = $("#qr-code-popup").dxPopup("instance");
+        popup.option({
+            "title": e.data.Name,
+            "contentTemplate": "<img src=\"/Admin/CafeTable/GetQrCode?id=" + e.data.Id + "\" style=\"object-fit: scale-down; width: 300px; height: 300px;\" />"
+        });
+        popup.show();
+    }
+</script>

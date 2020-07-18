@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Themes\Default\Views\Home\" />
     <Folder Include="Themes\Default\Views\Shared\" />
+    <Folder Include="wwwroot\qrImages\zips\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\site.js" />

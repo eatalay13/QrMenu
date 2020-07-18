@@ -8,6 +8,8 @@ using Core.Utilities.Interceptors;
 using Data.UnitOfWork;
 using Business.Managers;
 using Business.Interfaces;
+using Core.QRCode;
+using Core.ZipManager;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -24,6 +26,9 @@ namespace Business.DependencyResolvers.Autofac
 
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+
+            builder.RegisterType<QRCodeManager>().SingleInstance();
+            builder.RegisterType<ZipManager>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
