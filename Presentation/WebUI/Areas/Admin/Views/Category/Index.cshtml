@@ -66,6 +66,8 @@
         columns.AddFor(m => m.SortOrder).Caption("Sıralama").MinWidth(60);
 
         columns.AddFor(m => m.Description).Caption("Açıklama").MinWidth(250);
+
+        columns.AddFor(m => m.IsActive).Caption("Aktif");
     })
     .Editing(e => e
         .Mode(GridEditMode.Popup)
@@ -76,7 +78,7 @@
               .Title("Kategori Detay")
               .ShowTitle(true)
               .Width(700)
-              .Height(500)
+              .Height(550)
               .Position(pos => pos
                   .My(HorizontalAlignment.Center, VerticalAlignment.Center)
                   .At(HorizontalAlignment.Center, VerticalAlignment.Center)
@@ -90,10 +92,13 @@
                     groupItems.AddSimpleFor(m => m.Name);
                     groupItems.AddSimpleFor(m => m.ParentCategoryId);
                     groupItems.AddSimpleFor(m => m.SortOrder);
-                    groupItems.AddSimpleFor(m => m.Description);
 
                     groupItems.AddSimpleFor(m => m.Image)
-                              .Editor(e => e.TextBox().ID("cat-image-input")).ColSpan(2);
+                            .Editor(e => e.TextBox().ID("cat-image-input"));
+
+                    groupItems.AddSimpleFor(m => m.Description).Editor(e=> e.TextArea()).ColSpan(2);
+
+                    groupItems.AddSimpleFor(m => m.IsActive);
                 });
         }))
     )

@@ -63,31 +63,25 @@ namespace WebUI.Controllers
             string IMAGE = nameof(Product.Image);
             string DESCRIPTION = nameof(Product.Description);
             string PRICE = nameof(Product.Price);
+            string ISACTIVE = nameof(Product.IsActive);
 
             if (values.Contains(ID))
-            {
                 model.Id = Convert.ToInt32(values[ID]);
-            }
 
             if (values.Contains(NAME))
-            {
                 model.Name = Convert.ToString(values[NAME]);
-            }
 
             if (values.Contains(IMAGE))
-            {
                 model.Image = Convert.ToString(values[IMAGE]);
-            }
 
             if (values.Contains(DESCRIPTION))
-            {
                 model.Description = Convert.ToString(values[DESCRIPTION]);
-            }
 
             if (values.Contains(PRICE))
-            {
                 model.Price = Convert.ToDecimal(values[PRICE], CultureInfo.InvariantCulture);
-            }
+
+            if (values.Contains(ISACTIVE))
+                model.IsActive = Convert.ToBoolean(values[ISACTIVE]);
         }
     }
 }

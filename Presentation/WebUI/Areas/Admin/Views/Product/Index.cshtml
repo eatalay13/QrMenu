@@ -73,6 +73,8 @@
 
         columns.AddFor(m => m.Description).Caption("Açıklama");
 
+        columns.AddFor(m => m.IsActive).Caption("Aktif");
+
         columns.Add()
             .Type(GridCommandColumnType.Buttons)
             .Width(110)
@@ -86,6 +88,7 @@
                     .Icon("movetofolder")
                     .OnClick("DetayIconClick");
             });
+
     })
     .Editing(e => e
         .Mode(GridEditMode.Popup)
@@ -113,6 +116,8 @@
 
                     groupItems.AddSimpleFor(m => m.Image)
                               .Editor(e => e.TextBox().ID("cat-image-input")).ColSpan(2);
+
+                    groupItems.AddSimpleFor(m => m.IsActive);
                 });
         }))
     )

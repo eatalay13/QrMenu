@@ -38,6 +38,7 @@ namespace Business.Managers
                     Photos = e.ProductImage.ToList(),
                     MainPhoto = e.Image,
                     Description = e.Description,
+                    IsActive = e.IsActive,
                     Price = e.Price
                 })
                 .FirstOrDefault(e => e.Id == id);
@@ -59,6 +60,7 @@ namespace Business.Managers
                 Description = addProduct.Description,
                 Image = addProduct.MainPhoto,
                 ProductImage = addProduct.Photos,
+                IsActive = addProduct.IsActive,
                 Price = addProduct.Price
             };
 
@@ -93,6 +95,7 @@ namespace Business.Managers
             product.Description = updateProduct.Description;
             product.Image = updateProduct.MainPhoto;
             product.ProductImage = updateProduct.Photos;
+            product.IsActive = updateProduct.IsActive;
             product.Price = updateProduct.Price;
 
             _uow.Product.Update(product);

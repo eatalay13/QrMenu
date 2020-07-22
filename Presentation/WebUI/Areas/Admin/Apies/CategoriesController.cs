@@ -74,36 +74,28 @@ namespace WebUI.Controllers
             string SORT_ORDER = nameof(Category.SortOrder);
             string DESCRIPTION = nameof(Category.Description);
             string IMAGE = nameof(Category.Image);
+            string ISACTIVE = nameof(Category.IsActive);
 
             if (values.Contains(ID))
-            {
                 model.Id = Convert.ToInt32(values[ID]);
-            }
 
             if (values.Contains(NAME))
-            {
                 model.Name = Convert.ToString(values[NAME]);
-            }
 
             if (values.Contains(PARENT_CATEGORY_ID))
-            {
                 model.ParentCategoryId = values[PARENT_CATEGORY_ID] != null ? Convert.ToInt32(values[PARENT_CATEGORY_ID]) : (int?)null;
-            }
 
             if (values.Contains(SORT_ORDER))
-            {
                 model.SortOrder = Convert.ToInt32(values[SORT_ORDER]);
-            }
 
             if (values.Contains(DESCRIPTION))
-            {
                 model.Description = Convert.ToString(values[DESCRIPTION]);
-            }
 
             if (values.Contains(IMAGE))
-            {
                 model.Image = Convert.ToString(values[IMAGE]);
-            }
+
+            if (values.Contains(ISACTIVE))
+                model.IsActive = Convert.ToBoolean(values[ISACTIVE]);
         }
     }
 }
