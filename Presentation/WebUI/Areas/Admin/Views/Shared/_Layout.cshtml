@@ -27,11 +27,24 @@
     <script src="~/Themes/Default/plugins/jquery-countto/jquery.countTo.js"></script>
     <script src="~/Themes/Default/plugins/raphael/raphael.min.js"></script>
 
+    <script src="~/js/devextreme/cldr.js"></script>
+    <script src="~/js/devextreme/cldr/event.js"></script>
+    <script src="~/js/devextreme/cldr/supplemental.js"></script>
+    <script src="~/js/devextreme/cldr/unresolved.js"></script>
+
+    <script src="~/js/devextreme/globalize.js"></script>
+    <script src="~/js/devextreme/globalize/message.js"></script>
+    <script src="~/js/devextreme/globalize/number.js"></script>
+    <script src="~/js/devextreme/globalize/currency.js"></script>
+    <script src="~/js/devextreme/globalize/date.js"></script>
+
     <script src="~/js/devextreme/jszip.js"></script>
     <script src="~/js/devextreme/dx.all.js"></script>
 
     <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
     <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+    <script src="@Url.Action( "CldrData", "Home", new { t = CldrDataScriptBuilder.GetCacheParam() })"></script>
+    <script src="~/js/devextreme/localization/dx.messages.tr.js"></script>
 </head>
 <body class="theme-indigo">
     <partial name="_loader" />
@@ -55,5 +68,21 @@
     <script src="~/Themes/Default/js/pages/index.js"></script>
     <script src="~/Themes/Default/js/demo.js"></script>
     @RenderSection("Scripts", required: false)
+    <script>
+        setLocale();
+        var locale = getLocale();
+        Globalize.locale(locale);
+        function changeLocale(data) {
+            setLocale(data.value);
+            document.location.reload();
+        }
+        function getLocale() {
+            const locale = sessionStorage.getItem("locale");
+            return locale != null ? locale : "en";
+        }
+        function setLocale() {
+            sessionStorage.setItem("locale", "tr");
+        }
+    </script>
 </body>
 </html>
