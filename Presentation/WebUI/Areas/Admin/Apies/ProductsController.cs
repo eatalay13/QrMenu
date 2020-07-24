@@ -2,6 +2,7 @@
 using Data.Repository.Contexts;
 using DevExtreme.AspNet.Mvc;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -13,6 +14,7 @@ using WebUI.Framework.Extensions;
 
 namespace WebUI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     public class ProductsController : Controller
     {

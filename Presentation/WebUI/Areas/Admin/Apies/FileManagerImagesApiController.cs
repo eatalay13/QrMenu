@@ -4,11 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DevExtreme.AspNet.Mvc.FileManagement;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Areas.Admin.Apies
 {
+    [Authorize]
     public class FileManagerImagesApiController : Controller
     {
         static readonly string SampleImagesRelativePath = "Upload";

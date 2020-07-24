@@ -1,6 +1,7 @@
 ﻿using Business.Interfaces;
 using DevExtreme.AspNet.Mvc;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -10,6 +11,7 @@ using WebUI.Framework.Extensions;
 
 namespace WebUI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     public class CategoriesController : Controller
     {

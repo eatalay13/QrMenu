@@ -54,6 +54,9 @@ namespace Business.Managers
 
         public void AddProduct(AddProductDto addProduct)
         {
+            if (addProduct.CategoryIds == null || !addProduct.CategoryIds.Any())
+                throw new BusinessException("Lütfen önce kategori seçiniz.");
+
             var product = new Product
             {
                 Name = addProduct.Name,
@@ -65,9 +68,6 @@ namespace Business.Managers
             };
 
             _uow.Product.Insert(product);
-
-            if (addProduct.CategoryIds == null || !addProduct.CategoryIds.Any())
-                throw new BusinessException("Lütfen önce kategori seçiniz.");
 
             var productCategories = _uow.Category.Table
                 .Where(c => addProduct.CategoryIds.Contains(c.Id))
